@@ -1,0 +1,24 @@
+.general-cart-item.divider-lg-bottom.pt-0.mb-20
+  %table.table.order-row{'data-link': "#{order_path(order)}"}
+    %tr
+      %td.col-half
+        %span.in-grey-600= t('orders.index.number')
+      %td.col-half
+        %span.general-order-number= order.number
+    %tr
+      %td
+        %span.in-grey-600= t('orders.index.completed_at')
+      %td
+        %span.in-grey-900.font-16.font-weight-light= order.created_at.strftime('%F')
+    %tr
+      %td
+        %span.in-grey-600= t('orders.index.status')
+      %td
+        %span.font-16.in-grey-900
+          .font-weight-light{class: ('text-success' |
+            if order.state == 'delivered')}= order.state.humanize |
+    %tr
+      %td
+        %span.in-grey-600= t('orders.index.total')
+      %td
+        %strong.font-16= number_to_currency(order.subtotal + order.shipment.price)

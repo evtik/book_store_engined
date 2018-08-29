@@ -1,0 +1,33 @@
+%main.container
+  #slider.carousel.slide{'data-ride': 'carousel'}
+    %ol.carousel-indicators.general-carousel-indicators
+      %li.active{'data-target': '#slider', 'data-slide-to': '0'}
+      - (@latest_books.length - 1).times do |i|
+        %li{'data-target': '#slider', 'data-slide-to': "#{i + 1}"}
+    .carousel-inner{role: 'listbox'}
+      .item.active
+        = render('carousel_book', book: @latest_books.first)
+      - @latest_books[1..-1].each do |book|
+        .item
+          = render('carousel_book', book: book)
+    %a.left.carousel-control{href: '#slider', role: 'button', |
+      'data-slide': 'prev'} |
+      %span.icon-prev{'aria-hidden': 'true'}
+      %span.sr-only Previous
+    %a.right.carousel-control{href: '#slider', role: 'button', |
+      'data-slide': 'next'} |
+      %span.icon-next{'aria-hidden': 'true'}
+      %span.sr-only Next
+.container
+  .jumbotron.text-center.mb-0
+    %h2.h1= t('.welcome')
+    .mb-res-50
+      %p.in-grey-600= t('.description')
+    = link_to(t('.get_started'),
+      catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
+      class: 'btn btn-default')
+  .mb-35
+    %h3= t('.best_sellers')
+    .row
+      = render(partial: '/books/book', collection: @most_popular_books,
+        as: :book)

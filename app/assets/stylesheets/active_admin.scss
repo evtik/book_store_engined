@@ -1,0 +1,39 @@
+@import "active_admin/mixins";
+@import "active_admin/base";
+
+$in_progress_color: #a1dbff;
+$in_queue_color: #7abcff;
+$in_delivery_color: #009ec3;
+$green_color: #009900;
+$red_color: #990000;
+
+.status_tag { 
+  &.in_progress { background: $in_progress_color; }
+  &.in_queue { background: $in_queue_color; }
+  &.in_delivery { background: $in_delivery_color; }
+  &.delivered { background: $green_color; }
+  &.canceled { background: $red_color; }
+
+  &.unprocessed { background: $in_progress_color; }
+  &.approved { background: $green_color; }
+  &.rejected { background: $red_color; }
+}
+
+ol.choices-group {
+  height: 200px;
+  width: 200px !important;
+  overflow: auto;
+}
+
+ul.images-row {
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    display: inline;
+  }
+}
+
+.row-thumb {
+  margin-right: .5rem;
+}

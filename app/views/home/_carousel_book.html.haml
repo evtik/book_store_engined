@@ -1,0 +1,14 @@
+.row
+  .col-sm-5
+    .general-img-wrap
+      = image_tag(book.main_image, alt: book.title,
+        class: 'img img-shadow general-thumbnail-img')
+  .col-sm-6
+    .mb-60
+      %h1= book.title
+      %p.lead.book-description.text-justify= truncate(book.description,
+        length: 400)
+      %p.in-grey-600.small= book.authors_full
+      .general-align.pt-20
+        = link_to(t('.buy_now'), ecomm.cart_items_path(id: book.id),
+          method: :post, class: 'btn btn-primary')

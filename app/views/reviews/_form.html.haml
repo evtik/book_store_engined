@@ -1,0 +1,19 @@
+.row
+  .col-xs-12.col-sm-8
+    %h3.in-gold-500.mb-25= t('.write_review')
+    %p.font-weight-light= t('.score')
+    - 5.times do |index|
+      %i.fa.fa-2x.fa-star.rate-star.review-star{id: "star-#{index + 1}",
+        class: ((@review.score < index + 1) ? 'rate-empty' : 'star-checked' )}
+    = form_for(@review, url: book_reviews_path) do |f|
+      = f.hidden_field(:book_id)
+      = f.hidden_field(:score)
+      .form-group{class: ('has-error' if @review.errors[:title].any?)}
+        = f.label(:title, t('.title'), class: 'control-label font-weight-light')
+        = f.text_field(:title, class: 'form-control')
+        %span.help-block= @review.errors[:title].first
+      .form-group{class: ('has-error' if @review.errors[:body].any?)}
+        = f.label(:body, t('.review'), class: 'control-label font-weight-light')
+        = f.text_area(:body, rows: '5', class: 'form-control')
+        %span.help-block= @review.errors[:body].first
+      = f.submit(t('.post'), class: 'btn btn-default pull-right')

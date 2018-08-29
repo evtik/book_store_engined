@@ -1,0 +1,6 @@
+-@categories.each do |category|
+  %li
+    = link_to(capitalize_category(category.first.first),
+      main_app.catalog_index_path('category' => category.first.second,
+      'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'),
+      class: css_class)

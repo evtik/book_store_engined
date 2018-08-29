@@ -1,0 +1,10 @@
+%ul.list-inline.pt-10.mb-25.mr-240
+  - @categories.each do |category|
+    %li.mr-35
+      = link_to(presenter.params.merge('category' => category.first.second),
+        class: 'filter-link') do
+        -if presenter.current_category?(category.first.second)
+          %b= capitalize_category(category.first.first)
+        -else
+          = capitalize_category(category.first.first)
+        %span.badge.general-badge= category.second

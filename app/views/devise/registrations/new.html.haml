@@ -1,0 +1,26 @@
+%main.container.general-main-wrap
+  .text-center
+    %h3.general-login-title= t('.sign_up')
+    = render('devise/shared/omniauth_links')
+    %p.general-login-text= t('.or')
+  = form_for(resource, as: resource_name, url: registration_path(resource_name),
+    html: {class: 'general-form'}) do |f|
+    = devise_error_messages!
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: 'email'}= t('.email')
+      = f.email_field(:email, class: 'form-control',
+        placeholder: t('.email'), autofocus: true)
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: 'password'}= t('.password')
+      = f.password_field(:password, class: 'form-control',
+        placeholder: t('.password'))
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: |
+        'password_confirmation'}= t('.confirm_password') |
+      = f.password_field(:password_confirmation, class: 'form-control',
+        placeholder: t('.confirm_password'))
+    .text-center
+      = f.submit(t('.sign_up'), class: 'btn btn-default mb-20')
+  %p.general-sign-text.text-center
+    = t('.have_account')
+    %a.in-gold-500{href: login_path}= t('devise.sessions.new.sign_in')

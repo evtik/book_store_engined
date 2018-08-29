@@ -1,0 +1,11 @@
+%tr.order-row{'data-link': "#{order_path(order)}"}
+  %td
+    %span.general-order-number= order.number
+  %td
+    %span.in-grey-900.font-16.font-weight-light= order.created_at.strftime('%F')
+  %td
+    %span.font-16.in-grey-900
+      .font-weight-light{class: ('text-success' |
+        if order.state == 'delivered')}= order.state.humanize |
+  %td
+    %strong.font-16= number_to_currency(order.subtotal + order.shipment.price)

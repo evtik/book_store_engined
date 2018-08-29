@@ -1,0 +1,8 @@
+%a.dropdown-toggle.dropdown-btn{href: '#', 'data-toggle': 'dropdown',
+  role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
+  = presenter.current_sorter
+  %i.fa.fa-angle-down.dropdown-icon
+%ul.dropdown-menu
+  - presenter.sorters.each do |sorter_params, sorter_name|
+    %li
+      = link_to(sorter_name, presenter.params.merge(sorter_params))

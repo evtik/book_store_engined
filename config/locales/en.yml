@@ -1,33 +1,334 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      address:
+        one: 'Address'
+        other: 'Addresses'
+      author:
+        one: 'Author'
+        other: 'Authors'
+      book:
+        one: 'Book'
+        other: 'Books'
+      category:
+        one: 'Category'
+        other: 'Categories'
+      coupon:
+        one: 'Coupon'
+        other: 'Coupons'
+      credit_card:
+        one: 'Credit card'
+        other: 'Credit cards'
+      material:
+        one: 'Material'
+        other: 'Materials'
+      order:
+        one: 'Order'
+        other: 'Orders'
+      review:
+        one: 'Review'
+        other: 'Reviews'
+      shipment:
+        one: 'Shipment'
+        other: 'Shipments'
+      user:
+        one: 'User'
+        other: 'Users'
+    attributes:
+      address:
+        <<: &first_last_name
+          first_name: 'First name'
+          last_name: 'Last name'
+        street_address: 'Street address'
+        city: 'City'
+        zip: 'Zip'
+        country: 'Country'
+        phone: 'Phone'
+      author:
+        <<: *first_last_name
+        <<: &description
+          description: 'Description'
+      book:
+        <<: &title
+          title: 'Title'
+        <<: &price
+          price: 'Price'
+        <<: *description
+        year: 'Year'
+        width: 'Width'
+        height: 'Height'
+        thickness: 'Thickness'
+        main_image: 'Main image'
+        images: 'Images'
+      category:
+        <<: &name
+          name: 'Name'
+      coupon:
+        code: 'Code'
+        expires: 'Expires'
+        discount: 'Discount'
+      credit_card:
+        number: 'Number'
+        cardholder: 'Cardholder'
+        month_year: 'Month / year'
+        cvv: 'CVV'
+      material:
+        <<: *name
+      order:
+        state:
+          state: 'State'
+          in_progress: 'In progress'
+          in_queue: 'In queue'
+          in_delivery: 'In delivery'
+          delivered: 'Delivered'
+          canceled: 'Canceled'
+      review:
+        <<: *title
+        score: 'Score'
+        body: 'Body'
+        state:
+          state: 'State'
+          unprocessed: 'Unprocessed'
+          approved: 'Approved'
+          rejected: 'Rejected'
+      shipment:
+        <<: *price
+        method: 'Method'
+        days_min: 'Days min'
+        days_max: 'Days max'
+    errors:
+      models:
+        book:
+          empty_category: 'A book must have a category'
+          empty_authors: 'There should be one author at least'
+          empty_materials: 'Pick one material at least'
+
+  active_admin:
+    aasm:
+      events:
+        choose_action: 'Choose action...'
+        queue: 'Queue'
+        deliver: 'Deliver'
+        complete: 'Complete'
+        cancel: 'Cancel'
+        approve: 'Approve'
+        reject: 'Reject'
+
+    batch_actions:
+      partially_destroyed:
+        one: |
+          One of %{count} %{plural_model} has not been deleted due to its
+          presence in orders!
+        other: |
+          %{rejected} of %{count} %{plural_model} have not been deleted due to
+          their presence in orders!
+
+    not_authorized: 'You are not authorized to access this resource!'
+
+    authors:
+      batch_action:
+        deleted_message: 'Selected authors have been successfully deleted!'
+      create:
+        created_message: 'The new author has been successfully added!'
+      update:
+        updated_message: 'The author`s details have been updated!'
+    books:
+      batch_action:
+        deleted_message: 'Selected books have been successfully deleted!'
+      cannot_destroy: |
+        The book cannot be deleted as it is already present in orders!
+      create:
+        created_message: 'The book has been successfully created!'
+      destroyed: 'The book has been successfully deleted!'
+      update:
+        updated_message: 'The book has been successfully updated!'
+    book_categories:
+      batch_action:
+        deleted_message: 'Selected categories have been successfully deleted!'
+      create:
+        created_message: 'The new category has been successfully added!'
+      update:
+        updated_message: 'The category has been successfully updated!'
+    materials:
+      batch_action:
+        deleted_message: 'Selected materials have been successfully deleted!'
+      create:
+        created_message: 'The new material has been successfully added!'
+      update:
+        updated_message: 'The material has been successfully updated!'
+    page:
+      index:
+        recent_orders: 'Recent Orders'
+        recent_reviews: 'Recent Reviews'
+        <<: &common_index_labels
+          state: 'State'
+          date: 'Date'
+        <<: &order_index_labels
+          order: 'Order'
+          customer: 'Customer'
+          total: 'Total'
+        <<: &review_index_labels
+          title: 'Title'
+          body: 'Body'
+          book: 'Book'
+          user: 'User'
+    resource:
+      index:
+        <<: &actions
+          actions: 'Actions'
+        all: 'All'
+        book:
+          image: 'Image'
+        order:
+          <<: *common_index_labels
+          <<: *order_index_labels
+        review:
+          <<: *common_index_labels
+          <<: *review_index_labels
+      show:
+        <<: *actions
+        book:
+          images: 'Images'
+          dimensions: 'Dimensions'
+        order:
+          items_total: 'Items total'
+          number: 'Number'
+          <<: *common_index_labels
+        review:
+          <<: *common_index_labels
+          <<: *review_index_labels
+      new:
+        author: &author_form_labels
+          author_details: 'Author details'
+        book: &book_form_labels
+          book_details: 'Book details'
+          category: 'Category'
+          authors: 'Authors'
+          materials: 'Materials'
+        book_category: &category_form_labels
+          category_details: 'Category details'
+        material: &material_form_labels
+          material_details: 'Material details'
+        user: &user_form_labels
+          user_details: 'User details'
+      edit:
+        author: *author_form_labels
+        book: *book_form_labels
+        book_category: *category_form_labels
+        material: *material_form_labels
+        user: *user_form_labels
+
+  books:
+    book_details:
+      back_to_results: 'Back to results'
+      add_to_cart: 'Add to Cart'
+      description: 'Description'
+      year: 'Year of publication'
+      dimensions: 'Dimensions'
+      materials: 'Materials'
+      read_more: 'Read more'
+      read_less: 'Read less'
+    book_reviews:
+      reviews: 'Reviews'
+      verified_reviewer: 'Verified reviewer'
+      write_review: 'Write review'
+
+  catalog:
+    index:
+      caption: 'Catalog'
+      sort_by: 'Sort by'
+      view_more: 'View more'
+    xs_catalog_filters:
+      filter_by_category: 'Filter by category'
+    catalog_sorters:
+      newest: 'Newest first'
+      popular: 'Popular first'
+      price_low: 'Price: Low to high'
+      price_high: 'Price: High to low'
+      title_az: 'Title: A-Z'
+      title_za: 'Title: Z-A'
+
+  home:
+    index:
+      welcome: 'Welcome to our amazing Bookstore!'
+      description: |
+        We pore through hundreds of new books each month and select the five 
+        best we can find to share with our members.
+      get_started: 'Get started'
+      best_sellers: 'Best sellers'
+    carousel_book:
+      buy_now: 'Buy Now'
+
+  layouts:
+    header:
+      brand: 'Bookstore'
+      home: 'Home'
+      shop: 'Shop'
+      account: 'My account'
+    my_account:
+      admin_panel: 'Admin panel'
+      orders: 'Orders'
+      settings: 'Settings'
+      logout: 'Log out'
+    login:
+      signup: 'Sign up'
+      login: 'Log in'
+
+  orders:
+    index:
+      my_orders: 'My Orders'
+      no_orders: 'No orders in current selection'
+      number: 'Number'
+      completed_at: 'Completed at'
+      status: 'Status'
+      total: 'Total'
+    orders_filters:
+      all: 'All'
+      in_progress: 'In progress'
+      in_queue: 'In queue'
+      in_delivery: 'In delivery'
+      delivered: 'Delivered'
+      canceled: 'Canceled'
+
+  reviews:
+    form:
+      write_review: 'Write a review'
+      score: 'Score'
+      title: 'Title'
+      review: 'Review'
+      post: 'Post'
+      success_message: |
+        Review posted! It will be visible upon admin's approval.
+
+  settings:
+    show:
+      caption: 'Settings'
+      address: 'Address'
+      privacy: 'Privacy'
+      save: 'Save'
+      address_saved: 'Your %{address_type} address has been successfully saved!'
+    change_email:
+      caption: 'Email'
+      enter_email: 'Enter Email'
+      placeholder: 'Enter your email'
+      email_updated: 'Your email has been successfully updated!'
+    change_password:
+      caption: 'Password'
+      old_password: 'Old Password'
+      new_password: 'New Password'
+      confirm: 'Confirm Password'
+      change: 'Change'
+      changed_message: 'Your password has been successfully changed!'
+    remove_account:
+      caption: 'Remove Account'
+      label: 'Please Remove My Account'
+      are_you_sure: 'Are you sure?'
+      understood: 'I understand that all data will be lost'
+      removed_message: 'Your account has been successfully deleted!'
+
+  user_mailer:
+    user_email:
+      subject: "Created account for %{email}"
+      title: "Welcoming %{email} at our awesome book store"
+      body_html: "Visit your %{href} to change or create some if needed"
+      settings_page: 'settings page'

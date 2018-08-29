@@ -17,3 +17,13 @@
 /yarn-error.log
 
 .byebug_history
+
+/public/uploads/*
+/**/*.swp
+
+coverage
+Session.vim
+tags
+tmux*
+.directory
+config/application.yml

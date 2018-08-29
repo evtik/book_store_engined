@@ -1,0 +1,53 @@
+%header.navbar.navbar-default
+  .container
+    .navbar-header
+      %button.navbar-toggle.pull-left.ml-15{type: 'button', |
+        'data-toggle': 'collapse', 'data-target': '#navbar'} |
+        %span.sr-only
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand= t('.brand')
+      = render('/layouts/cart_icon', css_class: 'visible-xs')
+    = render('/layouts/cart_icon', css_class: 'hidden-xs')
+    #navbar.navbar-collapse.collapse.pl-30{'aria-expanded': 'false'}
+      .visible-xs
+        %button.close{type: 'button', 'aria-label': 'Close'}
+          %span{'aria-hidden': 'true'} &times;
+        %ul.nav.navbar-nav
+          %li
+            = link_to(t('.home'), main_app.root_path)
+          %li
+            %a{type: 'button', 'data-toggle': 'collapse',
+            href: '#shop-menu', 'aria-expanded': 'false', |
+              'aria-controls': 'menu'}= t('.shop') |
+            %ul#shop-menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': 'false'}
+              = render('layouts/categories', css_class: 'collapse-link')
+          - if user_signed_in?
+            %li
+              %a{type: 'button', 'data-toggle': 'collapse',
+              href: '#account-menu', 'aria-expanded': 'false', |
+                'aria-controls': 'menu'}= t('.account') |
+              %ul#account-menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': 'false'}
+                = render('layouts/my_account', css_class: 'collapse-link')
+          - else
+            = render('layouts/login')
+      .hidden-xs
+        %ul.nav.navbar-nav
+          %li
+            = link_to(t('.home'), main_app.root_path)
+          %li.dropdown
+            %a.dropdown-toggle{'data-toggle': 'dropdown',
+              role: 'button', 'aria-haspopup': 'true',
+              'aria-expanded': 'false'}= t('.shop')
+            %ul.dropdown-menu
+              = render('layouts/categories', css_class: nil)
+          -if user_signed_in?
+            %li.dropdown
+              %a.dropdown-toggle{'data-toggle': 'dropdown', role: 'button',
+                'aria-haspopup': 'true',
+                'aria-expanded': 'false'}= t('.account')
+              %ul.dropdown-menu
+                = render('layouts/my_account', css_class: nil)
+          -else
+            = render('layouts/login')

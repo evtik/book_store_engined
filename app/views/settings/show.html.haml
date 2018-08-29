@@ -1,0 +1,47 @@
+%main.container
+  %h1.general-title-margin= t('.caption')
+  %ul.nav.nav-tabs.mb-20{role: 'tablist'}
+    %li.mb-10{class: ('active' unless flash[:show_privacy]), role: 'presentation'}
+      %a{href: '#address', 'aria-controls': 'address', role: 'tab', |
+        'data-toggle': 'tab'}= t('.address') |
+    %li.mb-10{class: ('active' if flash[:show_privacy]), role: 'presentation'}
+      %a{href: '#privacy', 'aria-controls': 'privacy', role: 'tab', |
+        'data-toggle': 'tab'}= t('.privacy') |
+  .tab-content
+    #address.tab-pane.general-main-wrap{class: ('active fade in' |
+      unless flash[:show_privacy]), role: 'tabpanel'} |
+      = form_for(@billing, url: settings_address_path, method: :put) do |f|
+        .hidden-xs.hidden-sm
+          .row
+            .col-md-5
+              %h3.general-subtitle.mt-0= presenter.tr_billing
+            .col-md-5.col-md-offset-1
+              %h3.general-subtitle.mt-0= presenter.tr_shipping
+        .row
+          .col-md-5.mb-40
+            .visible-xs.visible-sm
+              %h3.general-subtitle.mt-0= presenter.tr_billing
+            = render('ecomm/checkout/address_fields', f: f, address: @billing,
+              type: 'billing', entity: 'address')
+            .text-center.general-text-align
+              = submit_tag(t('.save'), name: 'billing',
+                class: 'btn btn-default')
+          .col-md-5.col-md-offset-1.mb-25
+            .visible-xs.visible-sm
+              %h3.general-subtitle.mt-0= presenter.tr_shipping
+            = form_for(@shipping, url: settings_address_path,
+              method: :put) do |f|
+              = render('ecomm/checkout/address_fields', f: f, address: @shipping,
+                type: 'shipping', entity: 'address')
+            .text-center.general-text-align
+              = submit_tag(t('.save'), name: 'shipping',
+                class: 'btn btn-default')
+    #privacy.tab-pane{class: ('active fade in' if flash[:show_privacy]), |
+      role: 'tabpanel'} |
+      .row.mb-60
+        .col-sm-5
+          = render('change_email')
+        .col-sm-5.col-sm-offset-1
+          = render('change_password')
+        .col-sm-12
+          = render('remove_account')

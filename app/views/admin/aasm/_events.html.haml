@@ -1,0 +1,5 @@
+= form_for(resource, url: path, method: :put) do
+  = select_tag(:event, options_for_select(collection),
+    prompt: t('active_admin.aasm.events.choose_action'),
+    hidden: resource.aasm.events.empty?,
+    onchange: 'this.form.submit();')

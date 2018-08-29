@@ -1,0 +1,21 @@
+%main.container
+  %h1.general-title-margin= t('.caption')
+  .hidden-xs.clearfix
+    .pull-right
+      .dropdown.width-240
+        = render('catalog_sorters')
+    = render('catalog_filters')
+  .mb-40.visible-xs
+    = render('xs_catalog_filters')
+    %p.in-grey-600.small.mb-10= t('.sort_by')
+    .dropdown
+      = render('catalog_sorters')
+  .mb-20
+    .row
+      = render(@books)
+  .text-center
+    %span
+      -if presenter.more_books?
+        = link_to(t('.view_more'),
+          presenter.params.merge('limit' => presenter.current_limit + 12),
+          class: 'btn btn-primary mb-60')

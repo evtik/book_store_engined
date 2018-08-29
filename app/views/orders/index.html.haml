@@ -1,0 +1,23 @@
+%main.container.general-main-wrap
+  %h1.mt-0.mb-25= t('.my_orders')
+  = render('orders_filters')
+  - if @orders.blank?
+    .container.text-center.mt-100
+      %h2= t('.no_orders')
+  - else
+    .visible-xs
+      = render(partial: 'xs_order', collection: @orders, as: :order)
+    .hidden-xs.mb-res-50
+      %table.table.table-hover
+        %thead
+          %tr
+            %th
+              %span.in-grey-600= t('.number')
+            %th
+              %span.in-grey-600= t('.completed_at')
+            %th
+              %span.in-grey-600= t('.status')
+            %th
+              %span.in-grey-600= t('.total')
+        %tbody
+          = render(partial: 'order', collection: @orders)

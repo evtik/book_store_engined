@@ -1,5 +1,20 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: '587',
+    domain: 'bookstore.com',
+    user_name: Figaro.env.gmail_username,
+    password: Figaro.env.gmail_password,
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.default_url_options = {
+    host: 'polar-crag-11320.herokuapp.com'
+  }
 
   # Code is not reloaded between requests.
   config.cache_classes = true

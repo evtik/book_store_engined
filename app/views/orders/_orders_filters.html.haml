@@ -1,0 +1,12 @@
+%p.in-grey-600.small.mb-10.visible-xs= t('catalog.index.sort_by')
+.dropdown.general-order-dropdown.mb-20
+  %a.dropdown-toggle.dropdown-btn{href: '#', 'data-toggle': 'dropdown',
+    role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
+    = t(".#{presenter.current_orders_filter}")
+    %i.fa.fa-angle-down.dropdown-icon
+  %ul.dropdown-menu
+    %li
+      = link_to(t('.all'), presenter.params.to_h.except!(:filter))
+    - presenter.filters.each do |filter|
+      %li
+        = link_to(t(".#{filter}"), presenter.params.merge(filter: filter))

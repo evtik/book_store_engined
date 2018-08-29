@@ -1,0 +1,17 @@
+.col-xs-6.col-sm-3
+  .general-thumb-wrap
+    .thumbnail.general-thumbnail
+      = image_tag(book.main_image, alt: book.title,
+        class: 'img img-shadow general-thumbnail-img')
+      .thumb-hover
+        .general-thumb-link-wrap
+          = link_to(book_path(book), class: 'thumb-hover-link') do
+            %i.fa.fa-eye.thumb-icon{'aria-hidden': 'true'}
+          = link_to(ecomm.cart_items_path(id: book.id), method: :post,
+            class: 'thumb-hover-link') do
+            %i.fa.fa-shopping-cart.thumb-icon
+  .general-thumb-info
+    %p.pull-right.font-16.in-gold-500= number_to_currency(book.price)
+    %p.general-title= truncate(book.title, length: 23)
+    %span.divider-sm
+    %p.in-grey-600.small= truncate(book.authors_short, length: 35)

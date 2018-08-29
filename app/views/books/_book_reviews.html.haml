@@ -1,0 +1,26 @@
+%h3.in-gold-500.mb-25= "#{t('.reviews')} (#{@book.approved_reviews.size})"
+.row
+  .col-xs-12.col-sm-8
+    %ul.media-list
+      - @book.approved_reviews.each do |review|
+        %li.media.divider-lg
+          .media-left
+            %span.img-circle.logo-size.logo-empty.media-object= |
+              presenter.reviewer_name(review.user).first |
+          .media-body
+            %div
+              %p.general-message-date.hidden-xs= l(review.updated_at,
+                format: :long_date)
+              %h4.media-heading.max-240.general-message-name
+                %p= presenter.reviewer_name(review.user)
+                - if presenter.verified_reviewer?(@book, review.user_id)
+                  %span.general-message-verified= t('.verified_reviewer')
+            .mb-15
+              - 5.times do |index|
+                %i.fa.fa-star.rate-star{class: |
+                  ('rate-empty' if review.score < index + 1)} |
+            %h4= review.title
+            = markdown(review.body)
+  .col-xs-12.col-sm-8
+    = link_to(t('.write_review'), new_book_review_path(@book),
+      class: 'btn btn-primary pull-right')

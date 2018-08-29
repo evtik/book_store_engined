@@ -1,0 +1,55 @@
+%main.container
+  = link_to((session[:back_to_results] || catalog_index_path),
+    class: 'general-back-link') do
+    %i.fa.fa-long-arrow-left.mr-15
+    = t('.back_to_results')
+  .row
+    .col-sm-6
+      .product-gallery
+        .mb-20
+          - unless @book.images.empty?
+            = image_tag(@book.images.first, alt: @book.title,
+              class: 'img-responsive', id: 'main-image')
+          .images.clearfix
+            - @book.images.each do |image|
+              = link_to('#', class: 'img-link',
+                'data-image': image.url) do
+                = image_tag(image, alt: image)
+    .col-sm-6
+      %h1.mt-res-0= @book.title
+      %p.in-grey-600.small= @book.authors_full
+      .row
+        .col-xs-12.col-md-4
+          %p.h1.in-gold-500.mt-10= number_to_currency(@book.price)
+        = form_tag(ecomm.cart_items_path, class: 'form-inline') do
+          .col-xs-5.col-md-3
+            .input-group.general-position
+              %a.input-link.quantity-decrement{data: |
+                {target: "quantities-#{@book.id}"}, href: '#'} |
+                %i.fa.fa-minus.line-height-40
+              = hidden_field_tag(:id, @book.id)
+              %input.form-control.quantity-input{type: 'number', min: '1', |
+                value: '1', name: 'quantity', id: "quantities-#{@book.id}"} |
+            .input-group.general-position
+              %a.input-link.quantity-increment{data: |
+                {target: "quantities-#{@book.id}"}, href: '#'} |
+                %i.fa.fa-plus.line-height-40
+          .col-xs-7.col-md-5
+            = submit_tag(t('.add_to_cart'),
+              class: 'btn btn-default pull-right general-position')
+      .pt-20.divider-lg
+        %p= t('.description')
+        %p#book-description.in-grey-600.small.line-height-2.text-justify
+          = @book.description
+      .pt-20.divider-lg
+        .clearfix
+          %p.general-item-info.pull-right= @book.year
+          %p.break-word= t('.year')
+      .pt-20.divider-lg
+        .clearfix
+          %p.general-item-info.pull-right= @book.dimensions
+          %p.break-word= t('.dimensions')
+      .pt-20.divider-lg
+        .clearfix
+          %p.general-item-info.pull-right= @book.materials_string
+          %p.break-word= t('.materials')

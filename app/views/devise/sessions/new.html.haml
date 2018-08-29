@@ -1,0 +1,29 @@
+%main.container.general-main-wrap
+  .text-center
+    %h3.general-login-title= t('.sign_in')
+    = render('devise/shared/omniauth_links')
+    %p.general-login-text= t('.or')
+  = form_for(resource, as: resource_name, url: session_path(resource_name),
+    html: {class: 'general-form'}) do |f|
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: 'email'}= t('.email')
+      = f.email_field(:email, class: 'form-control', placeholder: t('.email'),
+        autofocus: true)
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: 'password'}= t('.password')
+      = f.password_field(:password, class: 'form-control',
+        placeholder: t('.password'))
+      %a.help-block.in-gold-500{href: |
+        new_user_password_path}= t('.forgot_password') |
+    .form-group.checkbox.text-center.mb-30
+      %label.font-weight-light.pl-0
+        = f.check_box(:remember_me, class: 'checkbox-input', hidden: 'true')
+        %span.checkbox-icon
+          %i.fa.fa-check
+        %span.checkbox-text= t('.remember_me')
+    .text-center
+      = f.submit(t('.sign_in'), class: 'btn btn-default mb-20')
+  %p.general-sign-text.text-center
+    = t('.have_no_account')
+    %a.in-gold-500{href: |
+      new_user_registration_path}= t('devise.registrations.new.sign_up') |
